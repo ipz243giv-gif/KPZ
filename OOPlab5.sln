@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClassConlsole", "SimpleClassConlsole\SimpleClassConlsole.csproj", "{050CB501-FFE1-40FB-9DC2-D86E898ACD63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClassLibrary", "SimpleClassLibrary\SimpleClassLibrary.csproj", "{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{050CB501-FFE1-40FB-9DC2-D86E898ACD63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{050CB501-FFE1-40FB-9DC2-D86E898ACD63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{050CB501-FFE1-40FB-9DC2-D86E898ACD63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

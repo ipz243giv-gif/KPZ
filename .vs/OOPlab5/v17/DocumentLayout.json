@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}|SimpleClassLibrary\\SimpleClassLibrary.csproj|C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\simpleclasslibrary\\date.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}|SimpleClassLibrary\\SimpleClassLibrary.csproj|solutionrelative:simpleclasslibrary\\date.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}|SimpleClassLibrary\\SimpleClassLibrary.csproj|C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\simpleclasslibrary\\airplane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{343B1F40-5EE8-47A3-9D7F-4E5D0BF8ACC2}|SimpleClassLibrary\\SimpleClassLibrary.csproj|solutionrelative:simpleclasslibrary\\airplane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{050CB501-FFE1-40FB-9DC2-D86E898ACD63}|SimpleClassConlsole\\SimpleClassConlsole.csproj|c:\\users\\qmasa\\source\\repos\\ooplab5\\simpleclassconlsole\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{050CB501-FFE1-40FB-9DC2-D86E898ACD63}|SimpleClassConlsole\\SimpleClassConlsole.csproj|solutionrelative:simpleclassconlsole\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,15 +34,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\SimpleClassConlsole\\Program.cs",
               "RelativeDocumentMoniker": "SimpleClassConlsole\\Program.cs",
               "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\SimpleClassConlsole\\Program.cs",
               "RelativeToolTip": "SimpleClassConlsole\\Program.cs",
-              "ViewState": "AgIAAHAAAAAAAAAAAADwv4QAAABbAAAAAAAAAA==",
+              "ViewState": "AgIAAOYAAAAAAAAAAAAuwPgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-12T16:21:28.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Airplane.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\SimpleClassLibrary\\Airplane.cs",
+              "RelativeDocumentMoniker": "SimpleClassLibrary\\Airplane.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\SimpleClassLibrary\\Airplane.cs",
+              "RelativeToolTip": "SimpleClassLibrary\\Airplane.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAQwDkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T17:34:51.185Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Date.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\SimpleClassLibrary\\Date.cs",
+              "RelativeDocumentMoniker": "SimpleClassLibrary\\Date.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\OOPlab5\\SimpleClassLibrary\\Date.cs",
+              "RelativeToolTip": "SimpleClassLibrary\\Date.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAiwBQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T17:33:49.557Z",
               "EditorCaption": ""
             }
           ]

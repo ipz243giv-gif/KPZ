@@ -4,82 +4,19 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using SimpleClassLibrary;
 
 namespace SimpleClassConlsole
 {
-    public class Date
-    {
-        protected int Year {  get; set; }
-        protected int Month { get; set; }
-        protected int Day { get; set; }
-        protected int Hours { get; set; }
-        protected int Minutes { get; set; }
-        public Date() { }
-
-        public Date(int year, int month, int day, int hours, int minutes)
-        {
-            Year = year;
-            Month = month;
-            Day = day;
-            Hours = hours;
-            Minutes = minutes;
-        }
-        public Date(Date copy)
-        {
-            Year = copy.Year;
-            Month = copy.Month;
-            Day = copy.Day;
-            Hours = copy.Hours;
-            Minutes = copy.Minutes;
-        }
-        public int getYear() { return Year; }
-        public int getMonth() { return Month; }
-        public int getDay() { return Day; }
-        public int getHours() { return Hours; }
-        public int getMinutes() { return Minutes; }
-        
-    }
-    public class Airplane
-    {
-        protected string StartCity {  get; set; }
-        protected string FinishCity { get; set; }
-        protected Date StartDate { get; set; }
-        protected Date FinishDate { get; set; }
-        public Airplane() { }
-        public Airplane(string startCity, string finishCity, Date startDate, Date finishDate)
-        {
-            StartCity = startCity;
-            FinishCity = finishCity;
-            StartDate = startDate;
-            FinishDate = finishDate;
-        }
-        public Airplane(Airplane copy)
-        {
-            StartCity = copy.StartCity;
-            FinishCity = copy.FinishCity;
-            StartDate = new Date(copy.StartDate);
-            FinishDate = new Date(copy.FinishDate);
-        }
-        public int GetTotalTime()
-        {
-            int startTotalMinutes = StartDate.getDay() * 24 * 60 + StartDate.getHours() * 60 + StartDate.getMinutes();
-            int finishTotalMinutes = FinishDate.getDay() * 24 * 60 + FinishDate.getHours() * 60 + FinishDate.getMinutes();
-
-            return finishTotalMinutes - startTotalMinutes;
-        }
-        public bool IsArrivingToday()
-        {
-            return StartDate.getYear() == FinishDate.getYear() && StartDate.getMonth() == FinishDate.getMonth() && StartDate.getDay() == FinishDate.getDay();
-        }
-        public string getStartCity() { return StartCity; }
-        public string getFinishCity() { return FinishCity; }
-        public Date getStartDate() {  return StartDate; }
-        public Date getFinishDate() { return FinishDate; }
-    }
     internal class Program
     {
         public static Airplane[] ReadAirplaneArray()
         {
+            int k; 
+            do 
+            { 
+                Console.WriteLine("Введіть одиницю вимірювання дальності польоту 1 - km, 2 - metr, 3 - mile"); 
+            } while (!int.TryParse(Console.ReadLine(), out k) || k < 1 || k > 3);
             Console.WriteLine("Введіть кількість літаків: ");
             int n = int.Parse(Console.ReadLine());
             Airplane[] airplanes = new Airplane[n];
@@ -159,8 +96,33 @@ namespace SimpleClassConlsole
                 {
                     Console.Write("Невірний ввід. Введіть числовід 0 до 59: ");
                 }
+                int distance;
+                Console.Write("Дальність польоту: ");
+                while (!int.TryParse(Console.ReadLine(), out distance) || distance < 0)
+                {
+                    Console.Write("Невірний ввід.: ");
+                }
+                double distanceKM = 0, distanceM = 0, distanceMiles = 0;
+                if (k == 1)
+                {
+                    distanceKM = distance;
+                    distanceM = distance * 1000;
+                    distanceMiles = distance / 1.609;
+                }
+                else if (k == 2)
+                {
+                    distanceKM = distance / 1000;
+                    distanceM = distance;
+                    distanceMiles = distance / 1609.34;
+                }
+                else if (k == 3)
+                {
+                    distanceKM = distance / 1.609;
+                    distanceM = distance * 1609.34;
+                    distanceMiles = distance;
+                }
                 Date finishDate = new Date(arriveyear, arrivemonth, arriveday, arrivehour, arriveminute);
-                airplanes[i] = new Airplane(startCity, finishCity, startDate, finishDate);
+                airplanes[i] = new Airplane(startCity, finishCity, startDate, finishDate, distanceKM, distanceM, distanceMiles);
             }
             Console.ForegroundColor = ConsoleColor.White;
             return airplanes;
@@ -172,6 +134,7 @@ namespace SimpleClassConlsole
             Console.WriteLine($"Місто прибуття: {airplane.getFinishCity()}");
             Console.WriteLine($"Дата відправлення: {airplane.getStartDate().getYear()}-{airplane.getStartDate().getMonth():D2}-{airplane.getStartDate().getDay():D2}-{airplane.getStartDate().getHours():D2}:{airplane.getStartDate().getMinutes():D2}");
             Console.WriteLine($"Дата прибуття: {airplane.getFinishDate().getYear()}-{airplane.getFinishDate().getMonth():D2}-{airplane.getFinishDate().getDay():D2}-{airplane.getFinishDate().getHours():D2}:{airplane.getFinishDate().getMinutes():D2}");
+            Console.WriteLine($"Дальність польоту: {airplane.getFlightDistanceKM():F01} км / {airplane.getFlightDistanceM():F01} м / {airplane.getFlightDistanceMiles():F01} миль");
         }
         public static void PrintAirplanes(Airplane[] airplane)
         {
