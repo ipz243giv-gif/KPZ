@@ -12,14 +12,11 @@ namespace SimpleClassConlsole
     {
         public static Airplane[] ReadAirplaneArray()
         {
-            int k; 
-            do 
-            { 
-                Console.WriteLine("Введіть одиницю вимірювання дальності польоту 1 - km, 2 - metr, 3 - mile"); 
-            } while (!int.TryParse(Console.ReadLine(), out k) || k < 1 || k > 3);
-            Console.WriteLine("Введіть кількість літаків: ");
-            int n = int.Parse(Console.ReadLine());
+            int k = ReadInt("Введіть одиницю вимірювання дальності польоту (1 - km, 2 - metr, 3 - mile): ", 1, 3);
+            int n = ReadInt("Введіть кількість літаків: ", 1, 100);
+
             Airplane[] airplanes = new Airplane[n];
+
             for (int i = 0; i < n; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -34,36 +31,38 @@ namespace SimpleClassConlsole
                 Date startDate = ReadDate("відправлення");
 
                 Date finishDate = ReadDate("прибуття");
-                
-                int distance;
-                Console.Write("Дальність польоту: ");
-                while (!int.TryParse(Console.ReadLine(), out distance) || distance < 0)
-                {
-                    Console.Write("Невірний ввід.: ");
-                }
-                double distanceKM = 0, distanceM = 0, distanceMiles = 0;
-                if (k == 1)
-                {
-                    distanceKM = distance;
-                    distanceM = distance * 1000;
-                    distanceMiles = distance / 1.609;
-                }
-                else if (k == 2)
-                {
-                    distanceKM = distance / 1000;
-                    distanceM = distance;
-                    distanceMiles = distance / 1609.34;
-                }
-                else if (k == 3)
-                {
-                    distanceKM = distance / 1.609;
-                    distanceM = distance * 1609.34;
-                    distanceMiles = distance;
-                }
-                airplanes[i] = new Airplane(startCity, finishCity, startDate, finishDate, distanceKM, distanceM, distanceMiles);
+
+                var (distKM, distM, distMiles) = GetDistanceValues(k);
+
+                airplanes[i] = new Airplane(startCity, finishCity, startDate, finishDate, distKM, distM, distMiles);
             }
             Console.ForegroundColor = ConsoleColor.White;
             return airplanes;
+        }
+        private static (double km, double m, double miles) GetDistanceValues(int unitType)
+        {
+            double distance = ReadInt("Дальність польоту: ", 0, 40000);
+            double km = 0, m = 0, miles = 0;
+
+            switch (unitType)
+            {
+                case 1:
+                    km = distance;
+                    m = distance * 1000;
+                    miles = distance / 1.60934;
+                    break;
+                case 2:
+                    km = distance / 1000.0;
+                    m = distance;
+                    miles = distance / 1609.34;
+                    break;
+                case 3:
+                    km = distance * 1.60934;
+                    m = distance * 1609.34;
+                    miles = distance;
+                    break;
+            }
+            return (km, m, miles);
         }
         public static void PrintAirplane(Airplane airplane)
         {
@@ -154,10 +153,8 @@ namespace SimpleClassConlsole
                 Console.WriteLine("5) Сортування рейсів за часом подорожі");
                 Console.WriteLine("0) Вихід");
                 Console.Write("Виберіть опцію: ");
-                while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > 5)
-                {
-                    Console.Write("Невірний ввід. Введіть число від 0 до 5: ");
-                }
+
+                choice = ReadInt("Виберіть опцію: ", 0, 5);
                 switch (choice)
                 {
                     case 1:
