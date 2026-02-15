@@ -31,71 +31,10 @@ namespace SimpleClassConlsole
                 Console.Write("Місто прибуття: "); 
                 string finishCity = Console.ReadLine();
 
-                Console.Write("Рік відправлення: ");
-                int year;
-                while (!int.TryParse(Console.ReadLine(), out year) || year <= 0)
-                {
-                    Console.Write("Невірний ввід. Введіть додатне число для ріку: ");
-                }
+                Date startDate = ReadDate("відправлення");
 
-                Console.Write("Місяць відправлення (1-12): ");
-                int month;
-                while (!int.TryParse(Console.ReadLine(), out month) || month < 1 || month > 12) 
-                { 
-                    Console.Write("Невірний ввід. Введіть числовід 1 до 12: "); 
-                }
-                Console.Write("День відправлення: ");
-                int day;
-                while (!int.TryParse(Console.ReadLine(), out day) || day <= 0 || day > 31)
-                {
-                    Console.Write("Невірний ввід.: ");
-                }
-                Console.Write("Година відправлення (0-23): ");
-                int hour;
-                while (!int.TryParse(Console.ReadLine(), out hour) || hour < 0 || hour > 23)
-                {
-                    Console.Write("Невірний ввід. Введіть числовід 0 до 23: ");
-                }
-                Console.Write("Хвилина відправлення (0-59): ");
-                int minute;
-                while (!int.TryParse(Console.ReadLine(), out minute) || minute < 0 || minute > 59)
-                {
-                    Console.Write("Невірний ввід. Введіть числовід 0 до 59: ");
-                }
-
-                Date startDate = new Date(year, month, day, hour, minute);
-
-                Console.Write("Рік прибуття: ");
-                int arriveyear;
-                while (!int.TryParse(Console.ReadLine(), out arriveyear) || arriveyear <= 0)
-                {
-                    Console.Write("Невірний ввід. Введіть додатне число для року: ");
-                }
-
-                Console.Write("Місяць прибуття (1-12): ");
-                int arrivemonth;
-                while (!int.TryParse(Console.ReadLine(), out arrivemonth) || arrivemonth < 1 || arrivemonth > 12)
-                {
-                    Console.Write("Невірний ввід. Введіть числовід 1 до 12: ");
-                }
-                Console.Write("День прибуття: ");
-                int arriveday;
-                while (!int.TryParse(Console.ReadLine(), out arriveday) || arriveday <= 0 || arriveday > 31)
-                {
-                    Console.Write("Невірний ввід.: ");
-                }
-                Console.Write("Година прибуття (0-23): ");
-                int arrivehour;
-                while (!int.TryParse(Console.ReadLine(), out arrivehour) || arrivehour < 0 || arrivehour > 23)
-                {
-                    Console.Write("Невірний ввід. Введіть числовід 0 до 23: ");
-                }
-                Console.Write("Хвилина прибуття (0-59): ");
-                int arriveminute;
-                while (!int.TryParse(Console.ReadLine(), out arriveminute) || arriveminute < 0 || arriveminute > 59)
-                {
-                    Console.Write("Невірний ввід. Введіть числовід 0 до 59: ");
-                }
+                Date finishDate = ReadDate("прибуття");
+                
                 int distance;
                 Console.Write("Дальність польоту: ");
                 while (!int.TryParse(Console.ReadLine(), out distance) || distance < 0)
@@ -121,7 +60,6 @@ namespace SimpleClassConlsole
                     distanceM = distance * 1609.34;
                     distanceMiles = distance;
                 }
-                Date finishDate = new Date(arriveyear, arrivemonth, arriveday, arrivehour, arriveminute);
                 airplanes[i] = new Airplane(startCity, finishCity, startDate, finishDate, distanceKM, distanceM, distanceMiles);
             }
             Console.ForegroundColor = ConsoleColor.White;
@@ -174,6 +112,30 @@ namespace SimpleClassConlsole
         {
             Array.Sort(airplanes, (x, y) => x.GetTotalTime().CompareTo(y.GetTotalTime()));
         }
+        
+        private static int ReadInt(string prompt, int min, int max)
+        {
+            int value;
+            Console.Write(prompt);
+            while (!int.TryParse(Console.ReadLine(), out value) || value < min || value > max)
+            {
+                Console.Write($"Помилка! Введіть ціле число від {min} до {max}: ");
+            }
+            return value;
+        }
+
+        private static Date ReadDate(string label)
+        {
+            Console.WriteLine($"\n--- Введення дати {label} ---");
+            int year = ReadInt("Рік: ", 1, 3000);
+            int month = ReadInt("Місяць (1-12): ", 1, 12);
+            int day = ReadInt("День (1-31): ", 1, 31);
+            int hour = ReadInt("Година (0-23): ", 0, 23);
+            int minute = ReadInt("Хвилина (0-59): ", 0, 59);
+
+            return new Date(year, month, day, hour, minute);
+        }
+        
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;
