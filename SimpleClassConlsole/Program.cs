@@ -34,7 +34,7 @@ namespace SimpleClassConlsole
 
                 var (distKM, distM, distMiles) = GetDistanceValues(k);
 
-                airplanes[i] = new Airplane(startCity, finishCity, startDate, finishDate, distKM, distM, distMiles);
+                airplanes[i] = new Airplane(startCity, finishCity, startDate, finishDate, dist);
             }
             Console.ForegroundColor = ConsoleColor.White;
             return airplanes;
