@@ -1,0 +1,130 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{732ED063-5AB1-4CB5-A034-31C51F7FFD51}|Task\\Task.csproj|c:\\users\\qmasa\\source\\repos\\lab03-kpz\\task\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{732ED063-5AB1-4CB5-A034-31C51F7FFD51}|Task\\Task.csproj|solutionrelative:task\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47AD8028-F7EE-4B83-9669-36DAB6DF3C4C}|Task6\\Task6.csproj|c:\\users\\qmasa\\source\\repos\\lab03-kpz\\task6\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47AD8028-F7EE-4B83-9669-36DAB6DF3C4C}|Task6\\Task6.csproj|solutionrelative:task6\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{456BFD82-51A0-4A21-A109-6B5E67D0A438}|Task5\\Task5.csproj|c:\\users\\qmasa\\source\\repos\\lab03-kpz\\task5\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{456BFD82-51A0-4A21-A109-6B5E67D0A438}|Task5\\Task5.csproj|solutionrelative:task5\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9D3A6D4-12C9-4EEA-90CA-6559D5414229}|Task3\\Task3.csproj|c:\\users\\qmasa\\source\\repos\\lab03-kpz\\task3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9D3A6D4-12C9-4EEA-90CA-6559D5414229}|Task3\\Task3.csproj|solutionrelative:task3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{196CF7B3-8A51-4C77-97AD-567D4883B6CF}|Task2\\Task2.csproj|c:\\users\\qmasa\\source\\repos\\lab03-kpz\\task2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{196CF7B3-8A51-4C77-97AD-567D4883B6CF}|Task2\\Task2.csproj|solutionrelative:task2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E74BAC5-24AD-45BF-9561-62EFF7FD3F8A}|Task4\\Task4.csproj|c:\\users\\qmasa\\source\\repos\\lab03-kpz\\task4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E74BAC5-24AD-45BF-9561-62EFF7FD3F8A}|Task4\\Task4.csproj|solutionrelative:task4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task6\\Program.cs",
+              "RelativeDocumentMoniker": "Task6\\Program.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task6\\Program.cs",
+              "RelativeToolTip": "Task6\\Program.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAQwBYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T18:30:10.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task5\\Program.cs",
+              "RelativeDocumentMoniker": "Task5\\Program.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task5\\Program.cs",
+              "RelativeToolTip": "Task5\\Program.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAQwAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T18:23:23.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task4\\Program.cs",
+              "RelativeDocumentMoniker": "Task4\\Program.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task4\\Program.cs",
+              "RelativeToolTip": "Task4\\Program.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAA7wF4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T18:19:05.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task3\\Program.cs",
+              "RelativeDocumentMoniker": "Task3\\Program.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task3\\Program.cs",
+              "RelativeToolTip": "Task3\\Program.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAkwEUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T18:13:15.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task2\\Program.cs",
+              "RelativeDocumentMoniker": "Task2\\Program.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task2\\Program.cs",
+              "RelativeToolTip": "Task2\\Program.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T18:11:20.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task\\Program.cs",
+              "RelativeDocumentMoniker": "Task\\Program.cs",
+              "ToolTip": "C:\\Users\\qmasa\\Source\\Repos\\Lab03-KPZ\\Task\\Program.cs",
+              "RelativeToolTip": "Task\\Program.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAUwGAAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T18:08:46.397Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
