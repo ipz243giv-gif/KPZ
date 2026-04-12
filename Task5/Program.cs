@@ -34,23 +34,40 @@ namespace Task5
             _tagName = tagName;
             _display = display;
             _closing = closing;
-
+            
             OnCreated();
         }
-        
-        protected virtual void OnCreated() 
+
+        protected virtual void OnCreated() => Console.WriteLine($"[Hook] Елемент <{_tagName}> створено.");
+        protected virtual void OnInserted() => Console.WriteLine($"[Hook] Елемент <{_tagName}> вставлено в DOM.");
+        protected virtual void OnStylesApplied(string className) => Console.WriteLine($"[Hook] До <{_tagName}> додано клас: {className}");
+
+        public IEnumerable<LightNode> GetDFS()
         {
-            Console.WriteLine($"[Hook] Елемент <{_tagName}> успішно створено в пам'яті.");
+            yield return this;
+            foreach (var child in _children)
+            {
+                if (child is LightElementNode element)
+                    foreach (var node in element.GetDFS()) yield return node;
+                else
+                    yield return child;
+            }
         }
 
-        protected virtual void OnInserted() 
+        public IEnumerable<LightNode> GetBFS()
         {
-            Console.WriteLine($"[Hook] Елемент <{_tagName}> було вставлено в дерево документа.");
-        }
-
-        protected virtual void OnStylesApplied(string className) 
-        {
-            Console.WriteLine($"[Hook] До елемента <{_tagName}> додано новий CSS клас: {className}");
+            var queue = new Queue<LightNode>();
+            queue.Enqueue(this);
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                yield return current;
+                if (current is LightElementNode element)
+                {
+                    foreach (var child in element._children)
+                        queue.Enqueue(child);
+                }
+            }
         }
 
         public void AddClass(string className) 
@@ -68,15 +85,10 @@ namespace Task5
             }
         }
 
-        public int ChildrenCount => _children.Count;
-
         public override string InnerHtml()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var child in _children)
-            {
-                sb.Append(child.OuterHtml());
-            }
+            foreach (var child in _children) sb.Append(child.OuterHtml());
             return sb.ToString();
         }
 
@@ -84,22 +96,15 @@ namespace Task5
         {
             StringBuilder sb = new StringBuilder();
             string classes = _cssClasses.Count > 0 ? $" class=\"{string.Join(" ", _cssClasses)}\"" : "";
-
             sb.Append($"<{_tagName}{classes}");
-
-            if (_closing == ClosingType.SelfClosing)
-            {
-                sb.Append(" />");
-            }
+            if (_closing == ClosingType.SelfClosing) sb.Append(" />");
             else
             {
                 sb.Append(">");
                 sb.Append(InnerHtml());
                 sb.Append($"</{_tagName}>");
             }
-
             if (_display == DisplayType.Block) sb.Append("\n");
-
             return sb.ToString();
         }
     }
@@ -110,19 +115,23 @@ namespace Task5
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            Console.WriteLine("--- Створення елементів (Демонстрація хуків) ---");
+            var body = new LightElementNode("body", DisplayType.Block, ClosingType.Normal);
+            var section = new LightElementNode("section", DisplayType.Block, ClosingType.Normal);
+            var p = new LightElementNode("p", DisplayType.Block, ClosingType.Normal);
+            
+            p.AddChild(new LightTextNode("Текст для ітератора"));
+            section.AddChild(p);
+            body.AddChild(section);
 
-            var container = new LightElementNode("div", DisplayType.Block, ClosingType.Normal);
-            container.AddClass("main-wrapper");
-
-            var title = new LightElementNode("h1", DisplayType.Block, ClosingType.Normal);
-            title.AddChild(new LightTextNode("Лабораторна робота №5"));
-
-            container.AddChild(title);
+            Console.WriteLine("\n--- Тестування Ітератора (DFS) ---");
+            foreach (var node in body.GetDFS())
+            {
+                Console.WriteLine($"Відвідано вузол: {node.GetType().Name}");
+            }
 
             Console.WriteLine("\n--- Кінцевий HTML ---");
-            Console.WriteLine(container.OuterHtml());
-
+            Console.WriteLine(body.OuterHtml());
+            
             Console.ReadKey();
         }
     }
