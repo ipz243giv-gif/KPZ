@@ -4,6 +4,39 @@ using System.Text;
 
 namespace Task5
 {
+    public interface ICommand
+    {
+        void Execute();
+    }
+
+    public class AddClassCommand : ICommand
+    {
+        private readonly LightElementNode _node;
+        private readonly string _className;
+
+        public AddClassCommand(LightElementNode node, string className)
+        {
+            _node = node;
+            _className = className;
+        }
+
+        public void Execute() => _node.AddClass(_className);
+    }
+
+    public class AddChildCommand : ICommand
+    {
+        private readonly LightElementNode _parent;
+        private readonly LightNode _child;
+
+        public AddChildCommand(LightElementNode parent, LightNode child)
+        {
+            _parent = parent;
+            _child = child;
+        }
+
+        public void Execute() => _parent.AddChild(_child);
+    }
+
     public abstract class LightNode
     {
         public abstract string InnerHtml();
@@ -34,13 +67,12 @@ namespace Task5
             _tagName = tagName;
             _display = display;
             _closing = closing;
-            
             OnCreated();
         }
 
-        protected virtual void OnCreated() => Console.WriteLine($"[Hook] Елемент <{_tagName}> створено.");
-        protected virtual void OnInserted() => Console.WriteLine($"[Hook] Елемент <{_tagName}> вставлено в DOM.");
-        protected virtual void OnStylesApplied(string className) => Console.WriteLine($"[Hook] До <{_tagName}> додано клас: {className}");
+        protected virtual void OnCreated() => Console.WriteLine($"[Hook] <{_tagName}> створено.");
+        protected virtual void OnInserted() => Console.WriteLine($"[Hook] <{_tagName}> вставлено в DOM.");
+        protected virtual void OnStylesApplied(string className) => Console.WriteLine($"[Hook] Додано клас: {className}");
 
         public IEnumerable<LightNode> GetDFS()
         {
@@ -54,22 +86,6 @@ namespace Task5
             }
         }
 
-        public IEnumerable<LightNode> GetBFS()
-        {
-            var queue = new Queue<LightNode>();
-            queue.Enqueue(this);
-            while (queue.Count > 0)
-            {
-                var current = queue.Dequeue();
-                yield return current;
-                if (current is LightElementNode element)
-                {
-                    foreach (var child in element._children)
-                        queue.Enqueue(child);
-                }
-            }
-        }
-
         public void AddClass(string className) 
         {
             _cssClasses.Add(className);
@@ -79,10 +95,7 @@ namespace Task5
         public void AddChild(LightNode node) 
         {
             _children.Add(node);
-            if (node is LightElementNode element)
-            {
-                element.OnInserted();
-            }
+            if (node is LightElementNode element) element.OnInserted();
         }
 
         public override string InnerHtml()
@@ -115,22 +128,20 @@ namespace Task5
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var body = new LightElementNode("body", DisplayType.Block, ClosingType.Normal);
-            var section = new LightElementNode("section", DisplayType.Block, ClosingType.Normal);
-            var p = new LightElementNode("p", DisplayType.Block, ClosingType.Normal);
-            
-            p.AddChild(new LightTextNode("Текст для ітератора"));
-            section.AddChild(p);
-            body.AddChild(section);
+            var main = new LightElementNode("main", DisplayType.Block, ClosingType.Normal);
+            var h2 = new LightElementNode("h2", DisplayType.Block, ClosingType.Normal);
+            h2.AddChild(new LightTextNode("Демонстрація патерну Команда"));
 
-            Console.WriteLine("\n--- Тестування Ітератора (DFS) ---");
-            foreach (var node in body.GetDFS())
-            {
-                Console.WriteLine($"Відвідано вузол: {node.GetType().Name}");
-            }
+            Console.WriteLine("\n--- Виконання команд ---");
+
+            ICommand addTitle = new AddChildCommand(main, h2);
+            addTitle.Execute();
+
+            ICommand addClass = new AddClassCommand(main, "container");
+            addClass.Execute();
 
             Console.WriteLine("\n--- Кінцевий HTML ---");
-            Console.WriteLine(body.OuterHtml());
+            Console.WriteLine(main.OuterHtml());
             
             Console.ReadKey();
         }
