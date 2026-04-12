@@ -4,22 +4,28 @@ using System.Text;
 
 namespace Task5
 {
-    public interface ICommand
+    public interface INodeState
     {
-        void Execute();
+        void Render(string tagName);
     }
+
+    public class VisibleState : INodeState
+    {
+        public void Render(string tagName) => Console.WriteLine($"[State] Тег <{tagName}> відображається на сторінці.");
+    }
+
+    public class HiddenState : INodeState
+    {
+        public void Render(string tagName) => Console.WriteLine($"[State] Тег <{tagName}> приховано (display: none).");
+    }
+
+    public interface ICommand { void Execute(); }
 
     public class AddClassCommand : ICommand
     {
         private readonly LightElementNode _node;
         private readonly string _className;
-
-        public AddClassCommand(LightElementNode node, string className)
-        {
-            _node = node;
-            _className = className;
-        }
-
+        public AddClassCommand(LightElementNode node, string className) { _node = node; _className = className; }
         public void Execute() => _node.AddClass(_className);
     }
 
@@ -27,13 +33,7 @@ namespace Task5
     {
         private readonly LightElementNode _parent;
         private readonly LightNode _child;
-
-        public AddChildCommand(LightElementNode parent, LightNode child)
-        {
-            _parent = parent;
-            _child = child;
-        }
-
+        public AddChildCommand(LightElementNode parent, LightNode child) { _parent = parent; _child = child; }
         public void Execute() => _parent.AddChild(_child);
     }
 
@@ -62,6 +62,8 @@ namespace Task5
         private List<string> _cssClasses = new List<string>();
         private List<LightNode> _children = new List<LightNode>();
 
+        private INodeState _state = new VisibleState();
+
         public LightElementNode(string tagName, DisplayType display, ClosingType closing)
         {
             _tagName = tagName;
@@ -69,9 +71,11 @@ namespace Task5
             _closing = closing;
             OnCreated();
         }
+        public void SetState(INodeState state) => _state = state;
+        public void Render() => _state.Render(_tagName);
 
         protected virtual void OnCreated() => Console.WriteLine($"[Hook] <{_tagName}> створено.");
-        protected virtual void OnInserted() => Console.WriteLine($"[Hook] <{_tagName}> вставлено в DOM.");
+        protected virtual void OnInserted() => Console.WriteLine($"[Hook] <{_tagName}> додано.");
         protected virtual void OnStylesApplied(string className) => Console.WriteLine($"[Hook] Додано клас: {className}");
 
         public IEnumerable<LightNode> GetDFS()
@@ -111,12 +115,7 @@ namespace Task5
             string classes = _cssClasses.Count > 0 ? $" class=\"{string.Join(" ", _cssClasses)}\"" : "";
             sb.Append($"<{_tagName}{classes}");
             if (_closing == ClosingType.SelfClosing) sb.Append(" />");
-            else
-            {
-                sb.Append(">");
-                sb.Append(InnerHtml());
-                sb.Append($"</{_tagName}>");
-            }
+            else { sb.Append(">"); sb.Append(InnerHtml()); sb.Append($"</{_tagName}>"); }
             if (_display == DisplayType.Block) sb.Append("\n");
             return sb.ToString();
         }
@@ -128,21 +127,14 @@ namespace Task5
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var main = new LightElementNode("main", DisplayType.Block, ClosingType.Normal);
-            var h2 = new LightElementNode("h2", DisplayType.Block, ClosingType.Normal);
-            h2.AddChild(new LightTextNode("Демонстрація патерну Команда"));
-
-            Console.WriteLine("\n--- Виконання команд ---");
-
-            ICommand addTitle = new AddChildCommand(main, h2);
-            addTitle.Execute();
-
-            ICommand addClass = new AddClassCommand(main, "container");
-            addClass.Execute();
-
-            Console.WriteLine("\n--- Кінцевий HTML ---");
-            Console.WriteLine(main.OuterHtml());
+            var div = new LightElementNode("div", DisplayType.Block, ClosingType.Normal);
             
+            Console.WriteLine("--- Тестування Стейту ---");
+            div.Render();
+            
+            div.SetState(new HiddenState());
+            div.Render();
+
             Console.ReadKey();
         }
     }
