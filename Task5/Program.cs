@@ -1,8 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Task5
 {
@@ -11,15 +9,15 @@ namespace Task5
         public abstract string InnerHtml();
         public abstract string OuterHtml();
     }
+
     public class LightTextNode : LightNode
     {
         private string _text;
-
         public LightTextNode(string text) => _text = text;
-
         public override string InnerHtml() => _text;
         public override string OuterHtml() => _text;
     }
+
     public enum DisplayType { Block, Inline }
     public enum ClosingType { Normal, SelfClosing }
 
@@ -36,10 +34,40 @@ namespace Task5
             _tagName = tagName;
             _display = display;
             _closing = closing;
+
+            OnCreated();
+        }
+        
+        protected virtual void OnCreated() 
+        {
+            Console.WriteLine($"[Hook] Елемент <{_tagName}> успішно створено в пам'яті.");
         }
 
-        public void AddClass(string className) => _cssClasses.Add(className);
-        public void AddChild(LightNode node) => _children.Add(node);
+        protected virtual void OnInserted() 
+        {
+            Console.WriteLine($"[Hook] Елемент <{_tagName}> було вставлено в дерево документа.");
+        }
+
+        protected virtual void OnStylesApplied(string className) 
+        {
+            Console.WriteLine($"[Hook] До елемента <{_tagName}> додано новий CSS клас: {className}");
+        }
+
+        public void AddClass(string className) 
+        {
+            _cssClasses.Add(className);
+            OnStylesApplied(className);
+        }
+
+        public void AddChild(LightNode node) 
+        {
+            _children.Add(node);
+            if (node is LightElementNode element)
+            {
+                element.OnInserted();
+            }
+        }
+
         public int ChildrenCount => _children.Count;
 
         public override string InnerHtml()
@@ -82,38 +110,17 @@ namespace Task5
         {
             Console.OutputEncoding = Encoding.UTF8;
 
+            Console.WriteLine("--- Створення елементів (Демонстрація хуків) ---");
+
             var container = new LightElementNode("div", DisplayType.Block, ClosingType.Normal);
-            container.AddClass("container");
+            container.AddClass("main-wrapper");
 
             var title = new LightElementNode("h1", DisplayType.Block, ClosingType.Normal);
-            title.AddChild(new LightTextNode("Мій список завдань"));
+            title.AddChild(new LightTextNode("Лабораторна робота №5"));
+
             container.AddChild(title);
 
-            var list = new LightElementNode("ul", DisplayType.Block, ClosingType.Normal);
-            list.AddClass("todo-list");
-
-            string[] tasks = { "Вивчити патерни", "Здати лабораторну", "Попити кави" };
-            foreach (var task in tasks)
-            {
-                var li = new LightElementNode("li", DisplayType.Block, ClosingType.Normal);
-                li.AddChild(new LightTextNode(task));
-                list.AddChild(li);
-            }
-
-            container.AddChild(list);
-
-            var img = new LightElementNode("img", DisplayType.Inline, ClosingType.SelfClosing);
-            img.AddClass("avatar");
-            container.AddChild(img);
-
-            // Вивід результатів
-            Console.WriteLine("--- Перевірка ChildrenCount ---");
-            Console.WriteLine($"Кількість дочірніх елементів у списку: {list.ChildrenCount}");
-
-            Console.WriteLine("\n--- Вивід innerHTML списку ---");
-            Console.WriteLine(list.InnerHtml());
-
-            Console.WriteLine("--- Вивід outerHTML всього контейнера ---");
+            Console.WriteLine("\n--- Кінцевий HTML ---");
             Console.WriteLine(container.OuterHtml());
 
             Console.ReadKey();
