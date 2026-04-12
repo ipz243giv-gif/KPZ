@@ -4,31 +4,26 @@ using System.Text;
 
 namespace Task5
 {
-    public interface INodeState
+    public interface IVisitor
     {
-        void Render(string tagName);
+        void VisitText(LightTextNode text);
+        void VisitElement(LightElementNode element);
     }
 
-    public class VisibleState : INodeState
+    public class StatisticsVisitor : IVisitor
     {
-        public void Render(string tagName) => Console.WriteLine($"[State] Тег <{tagName}> відображається на сторінці.");
+        public int ElementsCount { get; private set; } = 0;
+        public int TextNodesCount { get; private set; } = 0;
+
+        public void VisitText(LightTextNode text) => TextNodesCount++;
+        public void VisitElement(LightElementNode element) => ElementsCount++;
     }
 
-    public class HiddenState : INodeState
-    {
-        public void Render(string tagName) => Console.WriteLine($"[State] Тег <{tagName}> приховано (display: none).");
-    }
+    public interface INodeState { void Render(string tagName); }
+    public class VisibleState : INodeState { public void Render(string tagName) => Console.WriteLine($"[State] <{tagName}> видимий."); }
+    public class HiddenState : INodeState { public void Render(string tagName) => Console.WriteLine($"[State] <{tagName}> прихований."); }
 
     public interface ICommand { void Execute(); }
-
-    public class AddClassCommand : ICommand
-    {
-        private readonly LightElementNode _node;
-        private readonly string _className;
-        public AddClassCommand(LightElementNode node, string className) { _node = node; _className = className; }
-        public void Execute() => _node.AddClass(_className);
-    }
-
     public class AddChildCommand : ICommand
     {
         private readonly LightElementNode _parent;
@@ -41,6 +36,8 @@ namespace Task5
     {
         public abstract string InnerHtml();
         public abstract string OuterHtml();
+
+        public abstract void Accept(IVisitor visitor);
     }
 
     public class LightTextNode : LightNode
@@ -49,6 +46,8 @@ namespace Task5
         public LightTextNode(string text) => _text = text;
         public override string InnerHtml() => _text;
         public override string OuterHtml() => _text;
+        
+        public override void Accept(IVisitor visitor) => visitor.VisitText(this);
     }
 
     public enum DisplayType { Block, Inline }
@@ -61,7 +60,6 @@ namespace Task5
         private ClosingType _closing;
         private List<string> _cssClasses = new List<string>();
         private List<LightNode> _children = new List<LightNode>();
-
         private INodeState _state = new VisibleState();
 
         public LightElementNode(string tagName, DisplayType display, ClosingType closing)
@@ -71,44 +69,32 @@ namespace Task5
             _closing = closing;
             OnCreated();
         }
-        public void SetState(INodeState state) => _state = state;
-        public void Render() => _state.Render(_tagName);
+
+        public override void Accept(IVisitor visitor)
+        {
+            visitor.VisitElement(this);
+            foreach (var child in _children)
+            {
+                child.Accept(visitor);
+            }
+        }
 
         protected virtual void OnCreated() => Console.WriteLine($"[Hook] <{_tagName}> створено.");
         protected virtual void OnInserted() => Console.WriteLine($"[Hook] <{_tagName}> додано.");
-        protected virtual void OnStylesApplied(string className) => Console.WriteLine($"[Hook] Додано клас: {className}");
 
         public IEnumerable<LightNode> GetDFS()
         {
             yield return this;
             foreach (var child in _children)
-            {
-                if (child is LightElementNode element)
-                    foreach (var node in element.GetDFS()) yield return node;
-                else
-                    yield return child;
-            }
+                if (child is LightElementNode element) foreach (var node in element.GetDFS()) yield return node;
+                else yield return child;
         }
 
-        public void AddClass(string className) 
-        {
-            _cssClasses.Add(className);
-            OnStylesApplied(className);
-        }
+        public void SetState(INodeState state) => _state = state;
+        public void AddChild(LightNode node) { _children.Add(node); if (node is LightElementNode el) el.OnInserted(); }
+        public void AddClass(string className) => _cssClasses.Add(className);
 
-        public void AddChild(LightNode node) 
-        {
-            _children.Add(node);
-            if (node is LightElementNode element) element.OnInserted();
-        }
-
-        public override string InnerHtml()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var child in _children) sb.Append(child.OuterHtml());
-            return sb.ToString();
-        }
-
+        public override string InnerHtml() { StringBuilder sb = new StringBuilder(); foreach (var child in _children) sb.Append(child.OuterHtml()); return sb.ToString(); }
         public override string OuterHtml()
         {
             StringBuilder sb = new StringBuilder();
@@ -126,14 +112,27 @@ namespace Task5
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-
+            
             var div = new LightElementNode("div", DisplayType.Block, ClosingType.Normal);
+            var h1 = new LightElementNode("h1", DisplayType.Block, ClosingType.Normal);
+            var p = new LightElementNode("p", DisplayType.Block, ClosingType.Normal);
+
+            ICommand cmd = new AddChildCommand(div, h1);
+            cmd.Execute();
+            div.AddChild(p);
+            p.AddChild(new LightTextNode("Фінальний текст для статистики."));
+
+            Console.WriteLine("\n--- Тестування ПАТЕРНУ ВІДВІДУВАЧ (ПР5) ---");
+            var stats = new StatisticsVisitor();
+            div.Accept(stats);
             
-            Console.WriteLine("--- Тестування Стейту ---");
-            div.Render();
-            
-            div.SetState(new HiddenState());
-            div.Render();
+            Console.WriteLine($"Результат аналізу дерева:");
+            Console.WriteLine($"- Кількість HTML-елементів: {stats.ElementsCount}");
+            Console.WriteLine($"- Кількість текстових вузлів: {stats.TextNodesCount}");
+
+            Console.WriteLine("\n--- Перевірка інших патернів ---");
+            Console.WriteLine("Обхід дерева (Iterator):");
+            foreach (var node in div.GetDFS()) Console.WriteLine($"  > {node.GetType().Name}");
 
             Console.ReadKey();
         }
